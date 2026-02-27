@@ -14,7 +14,7 @@ var assemblies = new Assembly[]
     {
         Assembly.GetExecutingAssembly(), typeof(CreateDiscountHandler).Assembly
     };
-builder.Services.AddMediatR(cfg=> cfg.RegisterServicesFromAssemblies(assemblies));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 builder.Services.AddGrpc();
 

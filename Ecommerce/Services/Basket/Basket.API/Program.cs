@@ -4,9 +4,9 @@ using Basket.Application.Settings;
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Repositories;
 using Basket.Infrastructure.Settings;
+using Discount.Grpc.Protos;
 using Microsoft.Extensions.Options;
 using System.Reflection;
-using Discount.Grpc.Protos;
 
 var builder = WebApplication.CreateBuilder(args);
 

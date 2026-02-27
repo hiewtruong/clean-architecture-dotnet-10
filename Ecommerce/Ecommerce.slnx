@@ -20,6 +20,9 @@
   </Folder>
   <Folder Name="/Services/Ordering/">
     <Project Path="Services/Ordering/Ordering.API/Ordering.API.csproj" Id="e0088540-c3e1-4e1b-a663-b88cda5364fc" />
+    <Project Path="Services/Ordering/Ordering.Application/Ordering.Application.csproj" />
+    <Project Path="Services/Ordering/Ordering.Core/Ordering.Core.csproj" />
+    <Project Path="Services/Ordering/Ordering.Infrastructure/Ordering.Infrastructure.csproj" />
   </Folder>
   <Project Path="docker-compose.dcproj">
     <Build />

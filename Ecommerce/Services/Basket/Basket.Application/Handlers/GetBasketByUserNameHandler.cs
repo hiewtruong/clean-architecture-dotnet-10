@@ -17,14 +17,14 @@ namespace Basket.Application.Handlers
         public async Task<ShoppingCartResponse> Handle(GetBasketByUserNameQuery request, CancellationToken cancellationToken)
         {
             var shoppingCart = await _basketRepository.GetBasket(request.UserName);
-            if(shoppingCart == null) 
+            if (shoppingCart == null)
             {
                 return new ShoppingCartResponse(request.UserName)
                 {
                     Items = new List<ShoppingCartItemResponse>()
                 };
             }
-            return shoppingCart.ToResponse();
+            return shoppingCart.ToShoppingCartResponse();
             //return BasketMapper.MapCart(shoppingCart);
         }
     }

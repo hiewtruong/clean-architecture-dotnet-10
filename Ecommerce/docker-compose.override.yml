@@ -29,8 +29,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    depends_on:
-      - catalogdb  
 
   orderdb:
     container_name: orderdb
@@ -84,7 +82,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"      
     depends_on:
-       - discountdb          
+      discountdb:
+        condition: service_healthy      
     ports:
       - "8002:8080"
 
@@ -99,4 +98,9 @@ services:
     ports:
       - "8003:8080" 
 
-  
+  payment:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672/"      
+    ports:
+      - "8004:8080"  

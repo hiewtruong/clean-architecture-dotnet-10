@@ -60,7 +60,7 @@ services:
       test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'StrongPassword123!' -Q 'select 1'"]
       interval: 10s
       timeout: 10s
-      retries: 3  
+      retries: 3   
 
   rabbitmq:
     container_name: rabbitmq
@@ -76,7 +76,8 @@ services:
       - "DatabaseSettings__DatabaseName=CatalogDb"
       - "DatabaseSettings__ProductCollectionName=Products"
       - "DatabaseSettings__BrandCollectionName=Brands"
-      - "DatabaseSettings__TypeCollectionName=Types" 
+      - "DatabaseSettings__TypeCollectionName=Types"
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200"  
     depends_on:
       - catalogdb          
     ports:
@@ -87,6 +88,7 @@ services:
       - "CacheSettings__ConnectionString=basketdb:6379" 
       - "GrpcSettings__DiscountUrl=http://discount:8080" 
       - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672/"
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200" 
     depends_on:
       - basketdb
       - rabbitmq
@@ -96,10 +98,11 @@ services:
   discount:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"      
+      - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password@1;"  
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200"  
     depends_on:
       discountdb:
-        condition: service_healthy      
+        condition: service_healthy          
     ports:
       - "8002:8080"
 
@@ -108,6 +111,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=StrongPassword123!;TrustServerCertificate=True;Encrypt=True;"     
       - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672/"
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200"  
     depends_on:
       - orderdb
       - rabbitmq 
@@ -117,10 +121,12 @@ services:
   payment:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672/"      
+      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672/"  
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200"  
     ports:
       - "8004:8080"  
 
+  
   identity:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -128,8 +134,30 @@ services:
       - "Jwt__Key=super_secure_secret_key_1234567890!@#"
       - "Jwt__Issuer=ecommerce.identity"
       - "Jwt__Audience=ecommerce.clients"
-      - "Jwt__DurationInMinutes=60"      
+      - "Jwt__DurationInMinutes=60"
+      - "ElasticConfiguration__Uri=http://elasticsearch:9200" 
     depends_on:
       - identitydb          
     ports: 
       - "8005:8080"
+ 
+  elasticsearch:
+    container_name: elasticsearch
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+  kibana:
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+  

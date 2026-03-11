@@ -12,8 +12,8 @@ namespace Discount.Infrastructure.Settings
         {
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
-            var loggerFactory = scope.ServiceProvider.GetRequiredService<ILoggerFactory>();
-            var logger = loggerFactory.CreateLogger("DbExtension");
+            var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+            var logger = loggerFactory.CreateLogger("DbMigration");
             var databaseSettings = services.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 
             try
@@ -68,7 +68,7 @@ namespace Discount.Infrastructure.Settings
                     //success -> exit retry loop
                     break;
                 }
-                catch 
+                catch
                 {
                     retry--;
                     if (retry == 0)

@@ -2,6 +2,10 @@
   <Folder Name="/ApiGateway/">
     <Project Path="ApiGateway/ApiGateway/ApiGateway.csproj" Id="cbcb9f51-60e9-4a23-b253-f2d99777b12c" />
   </Folder>
+  <Folder Name="/Aspire/">
+    <Project Path="Aspire/Ecommerce.AppHost/Ecommerce.AppHost.csproj" Id="52f6f6bf-c580-4ba3-b85c-d32c25452c63" />
+    <Project Path="Aspire/Ecommerce.ServiceDefaults/Ecommerce.ServiceDefaults.csproj" Id="eb8f7759-017d-4af6-b7bc-7df20d4733f0" />
+  </Folder>
   <Folder Name="/Infrastructure/">
     <Project Path="Infrastructure/Common.Logging/Common.Logging.csproj" />
     <Project Path="Infrastructure/EventBus.Messages/EventBus.Messages.csproj" Id="40f81cf0-48dc-44ad-b8ff-22c3718b67d2" />

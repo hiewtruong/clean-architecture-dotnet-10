@@ -37,7 +37,7 @@ export class AcntService {
 
   login(state?: string) {
       this.msalService.loginRedirect({
-      scopes: ["openid", "profile", "https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176"],
+      scopes: ["openid", "profile", "offline_access"],
       state: state
     });
     //this.currentUserSource.next(this.msalService.instance.getActiveAccount());

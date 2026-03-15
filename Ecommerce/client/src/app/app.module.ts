@@ -14,10 +14,10 @@ import { MsalGuardConfiguration, MsalInterceptorConfiguration, MsalModule, MsalR
 export function MSALInstanceFactory(): PublicClientApplication {
   return new PublicClientApplication({
     auth: {
-      clientId: '85ec0233-0ecb-4830-96f5-12d00bf87176',
-      authority: 'https://sportscenter19.b2clogin.com/sportscenter19.onmicrosoft.com/B2C_1_SignInSignUp/v2.0/',
+      clientId: 'ea601a45-1cb3-4f3e-9fec-c47239bb0c4e',
+      authority: 'https://login.microsoftonline.com/sportscenterhewitt.onmicrosoft.com',
       redirectUri: 'http://localhost:4200',
-      knownAuthorities: ['sportscenter19.b2clogin.com'],
+      knownAuthorities: ['sportscenterhewitt.b2clogin.com'],
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
@@ -31,7 +31,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Redirect,
     authRequest: {
-      scopes: ["openid", "profile", "https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176/access_as_user"]
+      scopes: ["openid", "profile", "api://ea601a45-1cb3-4f3e-9fec-c47239bb0c4e/access_as_user"]
     }
   };
 }
@@ -41,7 +41,7 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   return {
     interactionType: InteractionType.Redirect,
     protectedResourceMap: new Map([
-      ['https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176', ['https://sportscenter19.onmicrosoft.com/85ec0233-0ecb-4830-96f5-12d00bf87176/access_as_user']]
+      ['api://ea601a45-1cb3-4f3e-9fec-c47239bb0c4e', ['api://ea601a45-1cb3-4f3e-9fec-c47239bb0c4e/access_as_user']]
     ])
   };
 }

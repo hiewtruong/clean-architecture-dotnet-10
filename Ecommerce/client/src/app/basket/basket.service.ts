@@ -18,7 +18,7 @@ export class BasketService {
   basketTotal$ = this.basketTotal.asObservable();
 
   getBasket(username: string){
-    return this.http.get<IBasket>(this.baseUrl+'/Basket/GetBasket/rahul').subscribe({
+    return this.http.get<IBasket>(this.baseUrl+'/Basket/GetBasket/hieu.truong').subscribe({
       //update the basketsource so that via observable these values will be available to the subscribers via component
       next:basket=>{
         this.basketSource.next(basket);
@@ -27,7 +27,7 @@ export class BasketService {
     });
   }
   setBasket(basket: IBasket){
-    return this.http.post<IBasket>(this.baseUrl +'/Basket/CreateBasket', basket).subscribe({
+    return this.http.post<IBasket>(this.baseUrl +'/Basket', basket).subscribe({
       next: basket =>{
         this.basketSource.next(basket);
         this.calculateBasketTotal();
@@ -43,7 +43,7 @@ export class BasketService {
         'Authorization': token
       })
     };
-    return this.http.post<IBasket>('http://localhost:8001/api/v2/Basket/Checkout', basket, httpOptions).subscribe({
+    return this.http.post<IBasket>('http://localhost:8001/api/v1/Basket/Checkout', basket, httpOptions).subscribe({
       next: basket =>{
         this.basketSource.next(null);
         this.router.navigateByUrl('/');

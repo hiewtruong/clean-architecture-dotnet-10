@@ -49,10 +49,9 @@ export class AppComponent implements OnInit {
   private async initializeMsal(): Promise<void> {
     const pca = new PublicClientApplication({
       auth: {
-        clientId: '85ec0233-0ecb-4830-96f5-12d00bf87176',
-        authority: 'https://sportscenter19.b2clogin.com/sportscenter19.onmicrosoft.com/B2C_1_SignInSignUp/v2.0/',
-        redirectUri: 'http://localhost:4200',
-        knownAuthorities: ['sportscenter19.b2clogin.com'],
+        clientId: 'ea601a45-1cb3-4f3e-9fec-c47239bb0c4e',
+        authority: 'https://login.microsoftonline.com/common',
+        redirectUri: 'http://localhost:4200'
       },
       cache: {
         cacheLocation: BrowserCacheLocation.LocalStorage,
